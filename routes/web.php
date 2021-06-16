@@ -27,7 +27,8 @@ Route::get('/about', function () {
     return view('about');
 });
 Route::get('/contact', [ContactController::class, 'index']);
-Route::get('/category/all', [CategoryController::class, 'AllCat'])->name('all.category');
+Route::get('/category/all', [CategoryController::class, 'allCat'])->name('all.category');
+Route::post('/category/add', [CategoryController::class, 'addCat'])->name('store.category');
 
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
