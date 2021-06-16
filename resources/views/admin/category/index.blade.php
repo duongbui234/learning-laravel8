@@ -2,7 +2,7 @@
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             Hi... <b style='color:#0d6efd;'>{{ Auth::user()->name }}</b>
-            <b style='float:right;'>Total user <span class='badge bg-primary'>{{ count($users) }}</span> </b>
+            <b style='float:right;'>All Category <span class='badge bg-primary'></span> </b>
         </h2>
     </x-slot>
 
@@ -19,15 +19,13 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @php($i = 1)
-                        @foreach($users as $user)
+
                         <tr>
-                            <th scope="row">{{ $i++ }}</th>
-                            <td>{{ $user->name }}</td>
-                            <td>{{ $user->email }}</td>
-                            <td>{{ Carbon\Carbon::parse($user->created_at)->diffForHumans() }}</td>
+                            <th scope="row"></th>
+                            <td></td>
+                            <td></td>
+                            <td></td>
                         </tr>
-                        @endforeach
 
                     </tbody>
                 </table>
