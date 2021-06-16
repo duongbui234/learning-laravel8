@@ -19,23 +19,29 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th scope="col">SL No</th>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Email</th>
+                                    <th scope="col">No</th>
+                                    <th scope="col">User</th>
+                                    <th scope="col">Category name</th>
                                     <th scope="col">Created At</th>
                                 </tr>
                             </thead>
                             <tbody>
-
-                                <tr>
-                                    <th scope="row"></th>
-                                    <td>1</td>
-                                    <td>2</td>
-                                    <td>3</td>
-                                </tr>
-
+                                {{-- @php($i = 1) --}}
+                                @foreach ($categories as $category)
+                                    <tr>
+                                        <th scope="row">{{ $categories->firstItem() + $loop->index }}</th>
+                                        <td>{{ $category->name }}</td>
+                                        <td>{{ $category->category_name}}</td>
+                                        @if (!$category->created_at)
+                                            <td><span class="text-danger">No date set</span></td>
+                                        @else
+                                            <td>{{ Carbon\Carbon::parse($category->created_at)->diffForHumans() }}</td>
+                                        @endif
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
+                        {{ $categories->links() }}
                     </div>
                 </div>
 
