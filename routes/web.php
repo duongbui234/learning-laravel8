@@ -29,6 +29,8 @@ Route::get('/about', function () {
 Route::get('/contact', [ContactController::class, 'index']);
 Route::get('/category/all', [CategoryController::class, 'allCat'])->name('all.category');
 Route::post('/category/add', [CategoryController::class, 'addCat'])->name('store.category');
+Route::get('/category/edit/{id}', [CategoryController::class, 'editCat']);
+Route::post('/category/update/{id}', [CategoryController::class, 'updateCat']);
 
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {

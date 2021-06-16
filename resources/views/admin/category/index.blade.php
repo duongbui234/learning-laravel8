@@ -14,15 +14,24 @@
 
                 <div class="col-md-8">
                     <div class="card">
+                        @if(session('success'))
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <strong>{{session('success')}}</strong>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        @endif
                         <div class="card-header">All category</div>
 
                         <table class="table">
                             <thead>
                                 <tr>
                                     <th scope="col">No</th>
-                                    <th scope="col">User</th>
                                     <th scope="col">Category name</th>
+                                    <th scope="col">User</th>
                                     <th scope="col">Created At</th>
+                                    <th scope="col">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -30,13 +39,17 @@
                                 @foreach ($categories as $category)
                                     <tr>
                                         <th scope="row">{{ $categories->firstItem() + $loop->index }}</th>
-                                        <td>{{ $category->name }}</td>
                                         <td>{{ $category->category_name}}</td>
+                                        <td>{{ $category->user->name }}</td>
                                         @if (!$category->created_at)
-                                            <td><span class="text-danger">No date set</span></td>
+                                        <td><span class="text-danger">No date set</span></td>
                                         @else
-                                            <td>{{ Carbon\Carbon::parse($category->created_at)->diffForHumans() }}</td>
+                                        <td>{{ Carbon\Carbon::parse($category->created_at)->diffForHumans() }}</td>
                                         @endif
+                                        <td>
+                                            <a href="{{ url('/category/edit/'.$category->id) }}" class="btn btn-info">Edit</a>
+                                            <a href="" class="btn btn-danger">Delete</a>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -48,15 +61,6 @@
                 <div class="col-md-4">
 
                     <div class="card">
-
-                        @if(session('success'))
-                            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                <strong>{{session('success')}}</strong>
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                        @endif
 
                         <div class="card-header">Add category</div>
                         <div class="card-body">
