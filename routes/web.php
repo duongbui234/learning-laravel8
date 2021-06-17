@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
@@ -26,6 +27,8 @@ Route::get('/about', function () {
     return view('about');
 });
 Route::get('/contact', [ContactController::class, 'index']);
+
+// Category router
 Route::get('/category/all', [CategoryController::class, 'allCat'])->name('all.category');
 Route::post('/category/add', [CategoryController::class, 'addCat'])->name('store.category');
 Route::get('/category/edit/{id}', [CategoryController::class, 'editCat']);
@@ -33,6 +36,9 @@ Route::post('/category/update/{id}', [CategoryController::class, 'updateCat']);
 Route::get('/category/softdelete/{id}', [CategoryController::class, 'softDelete']);
 Route::get('/category/restore/{id}', [CategoryController::class, 'restoreCat']);
 Route::get('/category/delete/{id}', [CategoryController::class, 'deleteCat']);
+
+// Brand router
+Route::get('/brand/all', [BrandController::class, 'allBrand'])->name('all.brand');
 
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
