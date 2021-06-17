@@ -38,8 +38,7 @@
                                 <tr>
                                     <th scope="row">{{ $brands->firstItem() + $loop->index }}</th>
                                     <td>{{ $brand->brand_name}}</td>
-                                    <td> <img src="{{ asset($brand->brand_image) }}" alt="{{ $brand->brand_name }}"
-                                            style="width: 40px; height: 50px ">
+                                    <td> <img src="{{ asset($brand->brand_image) }}" alt="{{ $brand->brand_name }}" >
                                     </td>
                                     @if (!$brand->created_at)
                                     <td><span class="text-danger">No date set</span></td>

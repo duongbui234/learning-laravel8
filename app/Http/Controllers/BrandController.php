@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Models\Brand;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Image;
+
+
 
 class BrandController extends Controller
 {
@@ -16,6 +20,8 @@ class BrandController extends Controller
 
     public function storeBrand(Request $req)
     {
+
+
         $req->validate([
             'brand_name' => 'required|unique:brands|min:6',
             'brand_image' => 'required|mimes:png,jpg',
@@ -30,8 +36,17 @@ class BrandController extends Controller
         $nameGen = hexdec(uniqid());
         $imgExt = strtolower($brandImg->getClientOriginalExtension());
         $imgName = $nameGen . '.' . $imgExt;
+
         $upLocation = 'image/brand/';
-        $brandImg->move($upLocation, $imgName);
+        $imgName = $nameGen . '.' . $imgExt;
+
+        Image::make($brandImg->getRealPath())->resize(50, 40)->save($upLocation .  $imgName);
+
+        // $nameGen = hexdec(uniqid());
+        // $imgExt = strtolower($brandImg->getClientOriginalExtension());
+        // $imgName = $nameGen . '.' . $imgExt;
+        // $upLocation = 'image/brand/';
+        // $brandImg->move($upLocation, $imgName);
 
         Brand::insert([
             'brand_name' => $req->brand_name,
