@@ -3,7 +3,6 @@
 use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
-use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
 /*
@@ -31,6 +30,9 @@ Route::get('/category/all', [CategoryController::class, 'allCat'])->name('all.ca
 Route::post('/category/add', [CategoryController::class, 'addCat'])->name('store.category');
 Route::get('/category/edit/{id}', [CategoryController::class, 'editCat']);
 Route::post('/category/update/{id}', [CategoryController::class, 'updateCat']);
+Route::get('/category/softdelete/{id}', [CategoryController::class, 'softDelete']);
+Route::get('/category/restore/{id}', [CategoryController::class, 'restoreCat']);
+Route::get('/category/delete/{id}', [CategoryController::class, 'deleteCat']);
 
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {

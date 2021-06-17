@@ -17,9 +17,11 @@ class CategoryController extends Controller
         //     ->select('categories.*', 'users.name')->latest()->paginate(5);
 
         $categories = Category::latest()->paginate(5);
+        $trashedList = Category::onlyTrashed()->latest()->paginate(3);
         // $categories = DB::table('categories')->latest()->paginate(5);
-        return view('admin.category.index', compact('categories'));
+        return view('admin.category.index', compact('categories', 'trashedList'));
     }
+
     public function addCat(Request $req)
     {
         $validatedData = $req->validate([
@@ -54,15 +56,39 @@ class CategoryController extends Controller
 
     public function editCat($id)
     {
-        $category = Category::find($id);
+        // $category = Category::find($id);
+        $category = DB::table('categories')->where('id', $id)->first();
         return view('admin.category.edit', compact('category'));
     }
+
     public function updateCat($id, Request $req)
     {
-        Category::find($id)->update([
+        // Category::find($id)->update([
+        //     'category_name' => $req->category_name,
+        //     'user_id' => Auth::user()->id
+        // ]);
+        DB::table('categories')->where('id', $id)->update([
             'category_name' => $req->category_name,
-            'user_id' => Auth::user()->id
+            'user_id' => AUth::user()->id,
         ]);
         return redirect()->route('all.category')->with('success', 'Category updated successfully 🚀');
+    }
+
+    public function softDelete($id)
+    {
+        Category::find($id)->delete();
+        return redirect()->back()->with('success', 'Category moved to trash list');
+    }
+
+    public function restoreCat($id)
+    {
+        Category::withTrashed()->find($id)->restore();
+        return redirect()->back()->with('success', 'Category restored successfully');
+    }
+
+    public function deleteCat($id)
+    {
+        Category::withTrashed()->find($id)->forceDelete();
+        return redirect()->back()->with('success', 'Category deleted successfully');
     }
 }
