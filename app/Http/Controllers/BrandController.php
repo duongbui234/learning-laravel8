@@ -38,9 +38,8 @@ class BrandController extends Controller
         $imgName = $nameGen . '.' . $imgExt;
 
         $upLocation = 'image/brand/';
-        $imgName = $nameGen . '.' . $imgExt;
 
-        Image::make($brandImg->getRealPath())->resize(50, 40)->save($upLocation .  $imgName);
+        Image::make($brandImg->getRealPath())->resize(200, 160)->save($upLocation .  $imgName);
 
         // $nameGen = hexdec(uniqid());
         // $imgExt = strtolower($brandImg->getClientOriginalExtension());
@@ -55,5 +54,55 @@ class BrandController extends Controller
         ]);
 
         return Redirect()->back()->with('success', 'Brand insert successfully');
+    }
+
+    public function editBrand($id)
+    {
+        $brand = Brand::find($id);
+
+        return view('admin.brand.edit', compact('brand'));
+    }
+    public function updateBrand(Request $req, $id)
+    {
+        $req->validate([
+            'brand_name' => 'required|min:6',
+            'brand_image' => 'mimes:png,jpg'
+        ], [
+            'brand_name.required' => 'Please provide brand name 🙏🙏🙏'
+        ], [
+            'brand_name.min' => 'Brand name must be greater than 6 characters 😅😅😅'
+        ]);
+
+        if ($req->file('brand_image')) {
+
+            $oldImg = $req->old_image;
+
+            $newImg = $req->file('brand_image');
+            $nameGen = hexdec(uniqid());
+            $imgExt = strtolower($newImg->getClientOriginalExtension());
+            $imgName = $nameGen . '.' . $imgExt;
+
+            $upLocation = 'image/brand/';
+
+            Image::make($newImg->getRealPath())->resize(200, 160)->save($upLocation . $imgName);
+
+            unlink($oldImg);
+
+            Brand::find($id)->update([
+                'brand_name' => $req->brand_name,
+                $req->file('brand_image') ?? 'brand_image' => $upLocation . $imgName,
+                'created_at' => Carbon::now()
+            ]);
+
+            return Redirect()->back()->with('success', 'Updated successfully 👏👏👏');
+        } else {
+
+            Brand::find($id)->update([
+                'brand_name' => $req->brand_name,
+                'created_at' => Carbon::now()
+            ]);
+
+            return Redirect()->back()->with('success', 'Updated successfully 👏👏👏');
+        }
     }
 }

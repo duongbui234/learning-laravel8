@@ -38,7 +38,8 @@
                                 <tr>
                                     <th scope="row">{{ $brands->firstItem() + $loop->index }}</th>
                                     <td>{{ $brand->brand_name}}</td>
-                                    <td> <img src="{{ asset($brand->brand_image) }}" alt="{{ $brand->brand_name }}" >
+                                    <td> <img src="{{ asset($brand->brand_image) }}" alt="{{ $brand->brand_name }}"
+                                            style="width: 50px; height= 40px;">
                                     </td>
                                     @if (!$brand->created_at)
                                     <td><span class="text-danger">No date set</span></td>
@@ -77,9 +78,17 @@
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="exampleInputEmail1" class="form-label">Brand image</label>
-                                    <input name='brand_image' type="file" class="form-control" id="exampleInputEmail1"
-                                        aria-describedby="emailHelp">
+                                    {{-- <label for="exampleInputEmail1" class="form-label">Brand image</label>
+                                    <input name='brand_image' type="file" class="form-control" placeholder="Choose file"
+                                        id="exampleInputEmail1" style="border: none"> --}}
+                                    <!-- actual upload which is hidden -->
+                                    <input type="file" id="actual-btn" hidden name="brand_image" />
+
+                                    <!-- our custom upload button -->
+                                    <label for="actual-btn" class="brand-label">Choose File</label>
+
+                                    <!-- name of file chosen -->
+                                    <span id="file-chosen">No file chosen</span>
                                     @error('brand_image')
                                     <span class="text-danger">{{$message}}</span>
                                     @enderror
