@@ -28,6 +28,11 @@
                         Brand
                     </x-jet-nav-link>
 
+                    <x-jet-nav-link href="{{ route('multi.pic') }}" style='text-decoration: none; '>
+                        {{-- {{ __('Dashboard') }} --}}
+                        Multi image
+                    </x-jet-nav-link>
+
                 </div>
 
             </div>

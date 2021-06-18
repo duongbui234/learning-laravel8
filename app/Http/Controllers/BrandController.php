@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\Models\Brand;
+use App\Models\Multipic;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Image;
@@ -90,7 +91,7 @@ class BrandController extends Controller
 
             Brand::find($id)->update([
                 'brand_name' => $req->brand_name,
-                $req->file('brand_image') ?? 'brand_image' => $upLocation . $imgName,
+                'brand_image' => $upLocation . $imgName,
                 'created_at' => Carbon::now()
             ]);
 
@@ -104,5 +105,50 @@ class BrandController extends Controller
 
             return Redirect()->back()->with('success', 'Updated successfully 👏👏👏');
         }
+    }
+
+    public function delBrand($id)
+    {
+        $brand = Brand::find($id);
+        unlink($brand->brand_image);
+
+        Brand::find($id)->delete();
+
+        return Redirect()->back()->with('success', 'Deleted brand successfully');
+    }
+
+    public function multiPic()
+    {
+        $pics = Multipic::all();
+        return view('admin.multipic.index', compact('pics'));
+    }
+
+    public function storeImg(Request $req)
+    {
+
+        // $req->validate([
+
+        //     'image' => 'required',
+        // ], [
+        //     'image.required' => 'Hmm, please provide image 🙏🙏🙏'
+        // ]);
+
+        $images = $req->file('images');
+
+        foreach ($images as $img) {
+
+
+            $imgName = hexdec(uniqid()) . '.' . strtolower($img->getClientOriginalExtension());
+            Image::make($img)->resize(300, 300)->save('image/multi/' . $imgName);
+
+            echo $imgName;
+
+            Multipic::insert([
+                'image' => 'image/multi/' . $imgName,
+                'created_at' => Carbon::now()
+            ]);
+        }
+
+        return Redirect()->back()->with('success', 'Inserted successfully');
     }
 }

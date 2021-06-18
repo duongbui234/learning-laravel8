@@ -48,7 +48,8 @@
                                     @endif
                                     <td>
                                         <a href="{{ url('/brand/edit/'.$brand->id) }}" class="btn btn-info">Edit</a>
-                                        <a href="{{ url('/brand/delete/' . $brand->id) }}" class="btn btn-danger">Move
+                                        <a href="{{ url('/brand/delete/' . $brand->id) }}" class="btn btn-danger"
+                                            onclick="return confirm('Are u sure delete this brand')">Move
                                             to trash</a>
                                     </td>
                                 </tr>
