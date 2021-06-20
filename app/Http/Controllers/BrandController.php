@@ -126,12 +126,6 @@ class BrandController extends Controller
     public function storeImg(Request $req)
     {
 
-        // $req->validate([
-
-        //     'image' => 'required',
-        // ], [
-        //     'image.required' => 'Hmm, please provide image 🙏🙏🙏'
-        // ]);
 
         $images = $req->file('images');
 

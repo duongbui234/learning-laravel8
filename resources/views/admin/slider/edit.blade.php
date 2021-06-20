@@ -20,7 +20,7 @@
                     <label for="exampleFormControlTextarea1">Description</label>
                     <textarea class="form-control" name="description" id="exampleFormControlTextarea1"
                         rows="3"></textarea>
-                    <input type="text" name='old_description' value="{{ $slider->description }}">
+                    <input type="hidden" name='old_description' value="{{ $slider->description }}">
                 </div>
                 <div class="form-group">
                     <input type="file" id="actual-btn" hidden name='image' />

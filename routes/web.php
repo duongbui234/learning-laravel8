@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\AboutController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
+use App\Models\HomeAbout;
 use Illuminate\Support\Facades\DB;
 
 /*
@@ -25,8 +27,16 @@ Route::get('/email/verify', function () {
 Route::get('/', function () {
     $brands = DB::table('brands')->get();
     $sliders = DB::table('sliders')->get();
-    return view('home', compact('brands', 'sliders'));
+    $about = DB::table('home_abouts')->first();
+    $images = DB::table('multipics')->get();
+    return view('home', compact('brands', 'sliders', 'about', 'images'));
 });
+
+Route::get('portfolio', function () {
+    $images = DB::table('multipics')->get();
+    return view('pages.portfolio', compact('images'));
+})->name('portfolio');
+
 Route::get('/home', function () {
     echo 'This is home';
 });
@@ -59,8 +69,23 @@ Route::get('/slider/edit/{id}', [HomeController::class, 'editSlider']);
 Route::post('/slider/update/{id}', [HomeController::class, 'updateSlider']);
 Route::get('/slider/delete/{id}', [HomeController::class, 'delSlider']);
 
+// Home about router
+Route::get('about/all', [AboutController::class, 'homeAbout'])->name('about.all');
+Route::get('about/add', function () {
+    return view('admin.home_about.create');
+})->name('about.add');
+Route::post('about/store', [AboutController::class, 'storeAbout'])->name('about.store');
+Route::get('about/edit/{id}', function ($id) {
+    $about = HomeAbout::find($id);
 
-// MultiImg router
+    return view('admin.home_about.edit', compact('about'));
+});
+
+Route::post('/about/update/{id}', [AboutController::class, 'updateAbout']);
+Route::get('/about/delete/{id}', [AboutController::class, 'deleteAbout']);
+
+
+// Multi pictures router
 Route::get('/multi/all', [BrandController::class, 'multiPic'])->name('multi.pic');
 Route::post('/multi/store', [BrandController::class, 'storeImg'])->name('store.image');
 
