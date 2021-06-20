@@ -4,6 +4,7 @@ use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\DB;
 
 /*
@@ -23,7 +24,8 @@ Route::get('/email/verify', function () {
 
 Route::get('/', function () {
     $brands = DB::table('brands')->get();
-    return view('home', compact('brands'));
+    $sliders = DB::table('sliders')->get();
+    return view('home', compact('brands', 'sliders'));
 });
 Route::get('/home', function () {
     echo 'This is home';
@@ -48,6 +50,11 @@ Route::post('/brand/add', [BrandController::class, 'storeBrand'])->name('store.b
 Route::get('/brand/edit/{id}', [BrandController::class, 'editBrand']);
 Route::post('/brand/update/{id}', [BrandController::class, 'updateBrand']);
 Route::get('/brand/delete/{id}', [BrandController::class, 'delBrand']);
+
+// Home slider router
+Route::get('slider/all', [HomeController::class, 'homeSlider'])->name('slider.all');
+Route::get('slider/add', [HomeController::class, 'addSlider']);
+Route::post('slider/store', [HomeController::class, 'storeSlider'])->name('slider.store');
 
 // MultiImg router
 Route::get('/multi/all', [BrandController::class, 'multiPic'])->name('multi.pic');

@@ -35,18 +35,6 @@
                                 @csrf
 
                                 <div class="mb-3">
-                                    {{-- <input type="file" id="actual-btn" hidden name="images" multiple='' />
-
-                                    <!-- our custom upload button -->
-                                    <label for="actual-btn" class="brand-label">Choose File</label>
-
-                                    <!-- name of file chosen -->
-                                    <span id="file-chosen">No file chosen</span> --}}
-
-                                    {{-- <label for="exampleInputEmail1" class="form-label">Multiple image</label>
-                                    <input name='image[]' type="file" class="form-control" id="exampleInputEmail1"
-                                        multiple=""> --}}
-
                                     <input type="file" id="actual-btn" hidden name='images[]' multiple="" />
 
                                     <!-- our custom upload button -->

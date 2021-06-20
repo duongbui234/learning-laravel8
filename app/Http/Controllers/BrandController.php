@@ -49,12 +49,6 @@ class BrandController extends Controller
 
         Image::make($brandImg->getRealPath())->resize(200, 160)->save($upLocation .  $imgName);
 
-        // $nameGen = hexdec(uniqid());
-        // $imgExt = strtolower($brandImg->getClientOriginalExtension());
-        // $imgName = $nameGen . '.' . $imgExt;
-        // $upLocation = 'image/brand/';
-        // $brandImg->move($upLocation, $imgName);
-
         Brand::insert([
             'brand_name' => $req->brand_name,
             'brand_image' => $upLocation . $imgName,
