@@ -41,7 +41,7 @@
 
                 <div class="col-lg-4 col-md-6 portfolio-item filter-app"
                     style="position: absolute; left: 0px; top: 0px;">
-                    <img src="{{ $img->image }}" class="img-fluid" alt="">
+                    <img src="{{ $img->image }}" class="img-fluid" alt="" style="width: 100%; heigth: auto">
                     <div class="portfolio-info">
                         <h4>App 1</h4>
                         <p>App</p>
