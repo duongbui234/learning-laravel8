@@ -25,6 +25,9 @@
     <!-- SLEEK CSS -->
     <link id="sleek-css" rel="stylesheet" href="{{ asset('backend/assets/css/sleek.css') }}" />
 
+    <link rel="stylesheet" href="{{ asset('css/custom_style.css') }}">
+    <script defer src="{{ asset('js/custom_app.js') }}"></script>
+
 
 
     <!-- FAVICON -->
@@ -192,7 +195,7 @@
             <div class="content-wrapper">
                 <div class="content">
 
-                    @yield('admin');
+                    @yield('admin')
 
 
                 </div>

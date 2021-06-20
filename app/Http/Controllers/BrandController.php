@@ -49,12 +49,6 @@ class BrandController extends Controller
 
         Image::make($brandImg->getRealPath())->resize(200, 160)->save($upLocation .  $imgName);
 
-        // $nameGen = hexdec(uniqid());
-        // $imgExt = strtolower($brandImg->getClientOriginalExtension());
-        // $imgName = $nameGen . '.' . $imgExt;
-        // $upLocation = 'image/brand/';
-        // $brandImg->move($upLocation, $imgName);
-
         Brand::insert([
             'brand_name' => $req->brand_name,
             'brand_image' => $upLocation . $imgName,
@@ -104,7 +98,6 @@ class BrandController extends Controller
 
             return Redirect()->back()->with('success', 'Updated successfully 👏👏👏');
         } else {
-
             Brand::find($id)->update([
                 'brand_name' => $req->brand_name,
                 'created_at' => Carbon::now()
@@ -133,12 +126,6 @@ class BrandController extends Controller
     public function storeImg(Request $req)
     {
 
-        // $req->validate([
-
-        //     'image' => 'required',
-        // ], [
-        //     'image.required' => 'Hmm, please provide image 🙏🙏🙏'
-        // ]);
 
         $images = $req->file('images');
 
