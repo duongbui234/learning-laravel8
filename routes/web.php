@@ -55,6 +55,10 @@ Route::get('/brand/delete/{id}', [BrandController::class, 'delBrand']);
 Route::get('slider/all', [HomeController::class, 'homeSlider'])->name('slider.all');
 Route::get('slider/add', [HomeController::class, 'addSlider']);
 Route::post('slider/store', [HomeController::class, 'storeSlider'])->name('slider.store');
+Route::get('/slider/edit/{id}', [HomeController::class, 'editSlider']);
+Route::post('/slider/update/{id}', [HomeController::class, 'updateSlider']);
+Route::get('/slider/delete/{id}', [HomeController::class, 'delSlider']);
+
 
 // MultiImg router
 Route::get('/multi/all', [BrandController::class, 'multiPic'])->name('multi.pic');

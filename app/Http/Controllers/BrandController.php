@@ -98,7 +98,6 @@ class BrandController extends Controller
 
             return Redirect()->back()->with('success', 'Updated successfully 👏👏👏');
         } else {
-
             Brand::find($id)->update([
                 'brand_name' => $req->brand_name,
                 'created_at' => Carbon::now()
