@@ -6,6 +6,7 @@ use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\SetupUserController;
 use App\Models\Contact;
 use App\Models\ContactForm;
 use App\Models\HomeAbout;
@@ -107,6 +108,12 @@ Route::get('/contact', function () {
     return view('pages.contact', compact('contact'));
 })->name('contact');
 Route::post('/contact/form', [ContactController::class, 'createContactForm'])->name('contact.form');
+
+// Setup user profile
+Route::get('password/change', [SetupUserController::class, 'editPass'])->name('password.change');
+Route::post('password/update', [SetupUserController::class, 'changePass'])->name('password.update');
+Route::get('profile/change', [SetupUserController::class, 'editProfile'])->name('profile.change');
+Route::post('profile/update', [SetupUserController::class, 'changeProfile'])->name('profile.update');
 
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {

@@ -22,6 +22,7 @@
     <link href="{{ asset('backend/assets/plugins/select2/css/select2.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('backend/assets/plugins/daterangepicker/daterangepicker.css') }}" rel="stylesheet" />
 
+
     <!-- SLEEK CSS -->
     <link id="sleek-css" rel="stylesheet" href="{{ asset('backend/assets/css/sleek.css') }}" />
 
@@ -147,28 +148,35 @@
                             <!-- User Account -->
                             <li class="dropdown user-menu">
                                 <button href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-                                    <img src="{{ asset('backend/assets/img/user/user.png') }}" class="user-image"
+                                    <img src="{{ Auth::user()->profile_photo_url }}" class="user-image"
                                         alt="User Image" />
-                                    <span class="d-none d-lg-inline-block">Abdus Salam</span>
+
+                                    <span class="d-none d-lg-inline-block">Mr
+                                        {{ Str::ucfirst(explode(' ',Auth::user()->name)[0]) }}</span>
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-right">
                                     <!-- User image -->
                                     <li class="dropdown-header">
-                                        <img src="{{ asset('backend/assets/img/user/user.png') }}" class="img-circle"
+                                        <img src="{{ Auth::user()->profile_photo_url }}" class="img-circle"
                                             alt="User Image" />
+
+                                        @php
+                                        $email = explode('@', Auth::user()->email)[0]
+                                        @endphp
+
                                         <div class="d-inline-block">
-                                            Abdus Salam <small class="pt-1">abdus@gmail.com</small>
+                                            {{ Auth::user()->name }} <small class="pt-1">{{  $email  }}</small>
                                         </div>
                                     </li>
 
                                     <li>
-                                        <a href="profile.html">
+                                        <a href="{{ route('profile.change') }}">
                                             <i class="mdi mdi-account"></i> My Profile
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="email-inbox.html">
-                                            <i class="mdi mdi-email"></i> Message
+                                        <a href="{{ route('password.change') }}">
+                                            <i class="mdi mdi-email"></i> Change password
                                         </a>
                                     </li>
                                     <li>
@@ -239,9 +247,6 @@
     <script src="{{ asset('backend/assets/js/date-range.js') }}"></script>
     <script src="{{ asset('backend/assets/js/map.js') }}"></script>
     <script src="{{ asset('backend/assets/js/custom.js') }}"></script>
-
-
-
 
 </body>
 
