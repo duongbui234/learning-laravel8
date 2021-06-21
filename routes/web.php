@@ -6,6 +6,8 @@ use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
+use App\Models\Contact;
+use App\Models\ContactForm;
 use App\Models\HomeAbout;
 use Illuminate\Support\Facades\DB;
 
@@ -40,10 +42,7 @@ Route::get('portfolio', function () {
 Route::get('/home', function () {
     echo 'This is home';
 });
-Route::get('/about', function () {
-    return view('about');
-});
-Route::get('/contact', [ContactController::class, 'index']);
+
 
 // Category router
 Route::get('/category/all', [CategoryController::class, 'allCat'])->name('all.category');
@@ -80,19 +79,37 @@ Route::get('about/edit/{id}', function ($id) {
 
     return view('admin.home_about.edit', compact('about'));
 });
-
 Route::post('/about/update/{id}', [AboutController::class, 'updateAbout']);
 Route::get('/about/delete/{id}', [AboutController::class, 'deleteAbout']);
-
 
 // Multi pictures router
 Route::get('/multi/all', [BrandController::class, 'multiPic'])->name('multi.pic');
 Route::post('/multi/store', [BrandController::class, 'storeImg'])->name('store.image');
 
+// Contact admin
+Route::get('/contact/all', [ContactController::class, 'allContact'])->name('all.contact');
+Route::get('/contact/add', function () {
+    return view('admin.contact.create');
+})->name('contact.add');
+Route::get('/contact/message', function () {
+    $messages = ContactForm::all();
+    return view('admin.contact.message', compact('messages'));
+})->name('contact.message');
+Route::get('/message/delete/{id}', function ($id) {
+    ContactForm::find($id)->delete();
+    return Redirect()->back()->with('success', "delete successfully");
+});
+Route::post('contact/store', [ContactController::class, 'storeContact'])->name('contact.store');
+
+// Contact page
+Route::get('/contact', function () {
+    $contact = DB::table('contacts')->first();
+    return view('pages.contact', compact('contact'));
+})->name('contact');
+Route::post('/contact/form', [ContactController::class, 'createContactForm'])->name('contact.form');
+
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    // $users = User::all();
-    // $users = DB::table('users')->get();
     return view('admin.index');
 })->name('dashboard');
 
