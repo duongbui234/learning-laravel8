@@ -50,6 +50,11 @@ class SetupUserController extends Controller
             'name' => !$req->user_name ? $req->old_name : $req->user_name, !$req->user_email ? $req->old_email : $req->user_email
         ]);
 
-        return Redirect()->back()->with('success', 'Update successfully 🚀🚀🚀');
+        $notification = [
+            'message' => 'Update user successfully 🚀🚀🚀',
+            'alertType' => 'success'
+        ];
+
+        return Redirect()->back()->with($notification);
     }
 }
